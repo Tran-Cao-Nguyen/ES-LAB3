@@ -21,11 +21,14 @@
 #include "spi.h"
 #include "tim.h"
 #include "gpio.h"
+#include "fsmc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "software_timer.h"
 #include "led_7seg.h"
+#include "button.h"
+#include "lcd.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,6 +98,7 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI1_Init();
   MX_TIM2_Init();
+  MX_FSMC_Init();
   /* USER CODE BEGIN 2 */
   system_init();
   led7_SetColon(1);
@@ -172,6 +176,7 @@ void system_init (){
 	timer_init();
 	led7_init();
 	setTimer2(50);
+	button_init();
 }
 
 
