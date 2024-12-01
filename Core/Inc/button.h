@@ -14,6 +14,7 @@
 extern uint16_t button_count[16];
 
 void button_init();
+int isButtonPressed();
 void button_Scan();
 
 

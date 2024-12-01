@@ -4,3 +4,4 @@
 ../Core/Src/led_7seg.c:79:6:led7_SetColon	16	static
 ../Core/Src/led_7seg.c:93:6:led_On	16	static
 ../Core/Src/led_7seg.c:108:6:led_Off	16	static
+../Core/Src/led_7seg.c:119:6:clearAllLed	16	static

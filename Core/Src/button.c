@@ -24,6 +24,15 @@ void button_init(){
   * @note  	Call every 50ms
   * @retval None
   */
+
+int isButtonPressed(int idx){
+	if(button_count[idx] >= 1)
+	{
+		button_count[idx] = 0;
+		return 1;
+	}
+	return 0;
+}
 void button_Scan(){
 	  HAL_GPIO_WritePin(BTN_LOAD_GPIO_Port, BTN_LOAD_Pin, 0);
 	  HAL_GPIO_WritePin(BTN_LOAD_GPIO_Port, BTN_LOAD_Pin, 1);

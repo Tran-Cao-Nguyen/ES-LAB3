@@ -1,0 +1,6 @@
+../Core/Src/graphic.c:14:6:lcdRedGreen	1
+../Core/Src/graphic.c:18:6:lcdRedAmber	1
+../Core/Src/graphic.c:22:6:lcdGreenRed	1
+../Core/Src/graphic.c:26:6:lcdAmberRed	1
+../Core/Src/graphic.c:31:6:updateLedBuffer	1
+../Core/Src/graphic.c:39:6:blinkingLed	5

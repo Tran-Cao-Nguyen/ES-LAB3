@@ -111,4 +111,31 @@ void led_Off(uint8_t index){
 	}
 }
 
+/**
+  * @brief  Tắt tất cả các LED trên mảng LED 7 đoạn và các LED khác liên quan
+  * @param  None
+  * @retval None
+  */
+void clearAllLed() {
+    // Đặt tất cả các giá trị trong mảng led7seg thành 0xFF (tắt tất cả các đoạn)
+    for (int i = 0; i < 4; i++) {
+        led7seg[i] = 0xFF; // 0xFF là trạng thái tắt cho LED 7 đoạn
+    }
+
+    // Xóa bit colon (dấu hai chấm)
+    led7_SetColon(0);
+
+    // Tắt tất cả các LED góc trên bên phải
+    for (int i = 6; i <= 8; i++) {
+        led_Off(i);
+    }
+
+    // Gửi lệnh cập nhật đến phần cứng
+    spi_buffer = 0xFFFF; // Buffer mặc định tắt
+    HAL_GPIO_WritePin(LD_LATCH_GPIO_Port, LD_LATCH_Pin, 0);
+    HAL_SPI_Transmit(&hspi1, (void *)&spi_buffer, 2, 1);
+    HAL_GPIO_WritePin(LD_LATCH_GPIO_Port, LD_LATCH_Pin, 1);
+}
+
+
 

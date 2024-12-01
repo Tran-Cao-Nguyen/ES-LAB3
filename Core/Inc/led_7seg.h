@@ -18,4 +18,6 @@ void led7_SetColon(uint8_t status);
 void led_On(uint8_t index);
 void led_Off(uint8_t index);
 
+void clearAllLed();
+
 #endif /* INC_LED7SEG_H_ */

@@ -25,10 +25,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "software_timer.h"
-#include "led_7seg.h"
-#include "button.h"
-#include "lcd.h"
+#include "global.h"
+#include "fsm_auto.h"
+#include "fsm_man.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -106,15 +105,18 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  fsm_automatic_run();
   while (1)
   {
-	  while(!flag_timer2);
-	  flag_timer2 = 0;
-	  // main task , every 50 ms
-	  test_7seg();
-	  test_LedDebug();
-	  test_LedY0();
-	  test_LedY1();
+	  while(!flag_timer1);
+	  flag_timer1 = 0;
+	  fsm_automatic_run();
+
+
+	  while(!flag_timer3);
+	  flag_timer3 = 0;
+	  fsm_manual_run();
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -175,8 +177,11 @@ void system_init (){
 	HAL_GPIO_WritePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin, RESET);
 	timer_init();
 	led7_init();
-	setTimer2(50);
+	setTimer2(1000);
+	setTimer1(1000);
+	setTimer3(250);
 	button_init();
+	lcd_init();
 }
 
 
