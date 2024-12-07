@@ -249,6 +249,9 @@ void keyInput()
 				tempRed = redDuration;
 				tempGreen = greenDuration;
 				tempAmber = amberDuration;
+				oldRed = redDuration;
+				oldAmber = amberDuration;
+				oldGreen = greenDuration;
 			}
 			break;
 		case GREEN_RED:
@@ -258,6 +261,9 @@ void keyInput()
 				tempRed = redDuration;
 				tempGreen = greenDuration;
 				tempAmber = amberDuration;
+				oldRed = redDuration;
+				oldAmber = amberDuration;
+				oldGreen = greenDuration;
 			}
 			break;
 		case INIT:
@@ -267,6 +273,9 @@ void keyInput()
 				tempRed = redDuration;
 				tempGreen = greenDuration;
 				tempAmber = amberDuration;
+				oldRed = redDuration;
+				oldAmber = amberDuration;
+				oldGreen = greenDuration;
 			}
 			break;
 		case MAN_RED:
