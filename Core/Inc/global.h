@@ -42,9 +42,12 @@ extern int tempRed;
 extern int tempGreen;
 extern int tempAmber;
 
+extern int oldRed;
+extern int oldAmber;
+extern int oldGreen;
+
 extern int status;
 
-
-
+extern int counter;
 
 #endif /* INC_GLOBAL_H_ */

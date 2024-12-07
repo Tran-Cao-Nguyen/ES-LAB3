@@ -33,7 +33,7 @@ void updateLedBuffer(int value1, int value2)
 	led7_SetDigit(value1/10, 0, 0);
 	led7_SetDigit(value1%10, 1, 0);
 	led7_SetDigit(value2/10, 2, 0);
-	led7_SetDigit(value2%10, 0, 0);
+	led7_SetDigit(value2%10, 3, 0);
 }
 
 void blinkingLed(enum LED led){

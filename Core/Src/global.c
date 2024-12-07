@@ -27,4 +27,8 @@ int tempRed;
 int tempGreen;
 int tempAmber;
 
+int oldRed;
+int oldAmber;
+int oldGreen;
 
+int counter = 0;

@@ -18,10 +18,10 @@ void fsm_init()
 
 void fsm_automatic_run(){
 
-	if (isButtonPressed(0))
+	if (isButtonPressed(0) && mode == 1)
 	{
 		clearAllLed();
-		status = MAN_RED;
+
 		mode = 2;
 		tempRed = redDuration;
 		tempGreen = greenDuration;
@@ -29,93 +29,98 @@ void fsm_automatic_run(){
 		isButtonPressed(1);
 		isButtonPressed(2);
 	}
-	switch (status)
+	if(counter % 4 == 0)
 	{
-		case INIT:
-			clearAllLed();
-			fsm_init();
-			status = RED_GREEN;
-
-			break;
-		case RED_GREEN:
-			lcd_Clear(WHITE);
-			lcdRedGreen();
-			road1 = redCounter;
-			road2 = greenCounter;
-
-			redCounter--;
-			greenCounter--;
-
-
-			if (greenCounter <= 0)
+		counter = 0;
+		switch (status)
 			{
-				status = RED_AMBER;
-				amberCounter = amberDuration / 1000;
+				case INIT:
+					clearAllLed();
+					fsm_init();
+					status = RED_GREEN;
+
+					break;
+				case RED_GREEN:
+					lcd_Clear(WHITE);
+					lcdRedGreen();
+					road1 = redCounter;
+					road2 = greenCounter;
+
+					redCounter--;
+					greenCounter--;
+					updateLedBuffer(road1, road2);
+
+					if (greenCounter <= 0)
+					{
+						status = RED_AMBER;
+						amberCounter = amberDuration / 1000;
+					}
+					break;
+				case RED_AMBER:
+					lcd_Clear(WHITE);
+					lcdRedAmber();
+
+					road1 = redCounter;
+					road2 = amberCounter;
+					updateLedBuffer(road1, road2);
+					redCounter--;
+					amberCounter--;
+
+					if (redCounter <= 0)
+					{
+						status = GREEN_RED;
+
+						redCounter = redDuration/1000;
+						greenCounter = greenDuration/1000;
+
+					}
+					break;
+				case GREEN_RED:
+					lcd_Clear(WHITE);
+					lcdGreenRed();
+
+					road1 = greenCounter;
+					road2 = redCounter;
+					updateLedBuffer(road1, road2);
+					redCounter--;
+					greenCounter--;
+
+					if (greenCounter <= 0)
+					{
+						status = AMBER_RED;
+						amberCounter = amberDuration/1000;
+
+					}
+					break;
+				case AMBER_RED:
+					lcd_Clear(WHITE);
+					lcdAmberRed();
+
+
+					road1 = amberCounter;
+					road2 = redCounter;
+					updateLedBuffer(road1, road2);
+					redCounter--;
+					amberCounter--;
+
+					if (redCounter <= 0)
+					{
+						status = RED_GREEN;
+
+						redCounter = redDuration/1000;
+						greenCounter = greenDuration/1000;
+
+					}
+					break;
+				default:
+					break;
 			}
-			break;
-		case RED_AMBER:
-			lcd_Clear(WHITE);
-			lcdRedAmber();
-
-			road1 = redCounter;
-			road2 = amberCounter;
-
-			redCounter--;
-			amberCounter--;
-
-			if (redCounter <= 0)
-			{
-				status = GREEN_RED;
-
-				redCounter = redDuration/1000;
-				greenCounter = greenDuration/1000;
-
-			}
-			break;
-		case GREEN_RED:
-			lcd_Clear(WHITE);
-			lcdGreenRed();
-
-			road1 = greenCounter;
-			road2 = redCounter;
-
-			redCounter--;
-			greenCounter--;
-
-			if (greenCounter <= 0)
-			{
-				status = AMBER_RED;
-				amberCounter = amberDuration/1000;
-
-			}
-			break;
-		case AMBER_RED:
-			lcd_Clear(WHITE);
-			lcdAmberRed();
-
-
-			road1 = amberCounter;
-			road2 = redCounter;
-
-			redCounter--;
-			amberCounter--;
-
-			if (redCounter <= 0)
-			{
-				status = RED_GREEN;
-
-				redCounter = redDuration/1000;
-				greenCounter = greenDuration/1000;
-
-			}
-			break;
-		default:
-			break;
+//			if (mode == 1)
+//			{
+//
+//			}
 	}
-	if (mode == 1)
-	{
-		updateLedBuffer(road1, road2);
-	}
+
 
 
 }

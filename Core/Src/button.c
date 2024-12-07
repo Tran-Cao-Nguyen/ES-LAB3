@@ -26,9 +26,9 @@ void button_init(){
   */
 
 int isButtonPressed(int idx){
-	if(button_count[idx] >= 1)
+	if(button_count[idx] == 1)
 	{
-		button_count[idx] = 0;
+//		HAL_GPIO_TogglePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin);
 		return 1;
 	}
 	return 0;

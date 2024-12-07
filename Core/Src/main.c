@@ -59,6 +59,7 @@ void test_LedDebug();
 void test_LedY0();
 void test_LedY1();
 void test_7seg();
+void keyInput();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -108,14 +109,18 @@ int main(void)
   fsm_automatic_run();
   while (1)
   {
-	  while(!flag_timer1);
-	  flag_timer1 = 0;
-	  fsm_automatic_run();
+//	  while(!flag_timer1);
+//	  flag_timer1 = 0;
+//	  fsm_automatic_run();
 
 
 	  while(!flag_timer3);
 	  flag_timer3 = 0;
+	  counter++;
+	  button_Scan();
+	  keyInput();
 	  fsm_manual_run();
+	  fsm_automatic_run();
 
     /* USER CODE END WHILE */
 
@@ -220,6 +225,135 @@ void test_7seg(){
 	led7_SetDigit(5, 1, 0);
 	led7_SetDigit(4, 2, 0);
 	led7_SetDigit(7, 3, 0);
+}
+
+void keyInput()
+{
+	switch(status){
+		case RED_GREEN:
+			if(button_count[0] == 1)
+			{
+				status = MAN_RED;
+				tempRed = redDuration;
+				tempGreen = greenDuration;
+				tempAmber = amberDuration;
+				oldRed = redDuration;
+				oldAmber = amberDuration;
+				oldGreen = greenDuration;
+			}
+			break;
+		case RED_AMBER:
+			if(button_count[0] == 1)
+			{
+				status = MAN_RED;
+				tempRed = redDuration;
+				tempGreen = greenDuration;
+				tempAmber = amberDuration;
+			}
+			break;
+		case GREEN_RED:
+			if(button_count[0] == 1)
+			{
+				status = MAN_RED;
+				tempRed = redDuration;
+				tempGreen = greenDuration;
+				tempAmber = amberDuration;
+			}
+			break;
+		case INIT:
+			if(button_count[0] == 1)
+			{
+				status = MAN_RED;
+				tempRed = redDuration;
+				tempGreen = greenDuration;
+				tempAmber = amberDuration;
+			}
+			break;
+		case MAN_RED:
+
+			if(button_count[0] == 1)
+			{
+//				if(button_count[2] != 1)
+//				{
+//					redDuration = tempRed;
+//				}
+				status = MAN_AMBER;
+				mode = 3;
+			}
+			if(button_count[1] == 1 && mode == 2)
+			{
+				tempRed += 1000;
+				if (tempRed > 99000)
+				{
+					tempRed = 1000;
+				}
+			}
+			if(button_count[2] == 1)
+			{
+				redDuration = tempRed;
+			}
+			break;
+		case MAN_AMBER:
+
+			if (button_count[0] == 1)
+			{
+//				if(button_count[2] != 1)
+//				{
+//					amberDuration = tempAmber;
+//				}
+				status = MAN_GREEN;
+				mode = 4;
+			}
+			if (button_count[1] == 1  && mode == 3)
+			{
+				tempAmber += 1000;
+				if (tempAmber > 99000)
+				{
+					tempAmber = 1000;
+				}
+			}
+			if(button_count[2] == 1)
+			{
+				amberDuration = tempAmber;
+			}
+			break;
+		case MAN_GREEN:
+
+			if (button_count[0] == 1)
+			{
+//				if(button_count[2] != 1)
+//				{
+//					greenDuration = tempGreen;
+//				}
+				if (redDuration == (greenDuration + amberDuration))
+				{
+					status = RED_GREEN;
+					redCounter = redDuration / 1000;
+					greenCounter = greenDuration / 1000;
+					amberCounter = amberDuration / 1000;
+					mode = 1;
+					HAL_GPIO_TogglePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin);
+				}
+				else
+				{
+					status = ERROR;
+				}
+			}
+			if (button_count[1] == 1 && mode == 4)
+			{
+				tempGreen += 1000;
+				if (tempGreen > 99000)
+				{
+					tempGreen = 1000;
+				}
+			}
+			if(button_count[2] == 1)
+			{
+				greenDuration = tempGreen;
+			}
+
+			break;
+	}
 }
 /* USER CODE END 4 */
 
